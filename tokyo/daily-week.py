@@ -54,45 +54,76 @@ if len(y7) < week:
                         y2 = np.append(y2, None)
 
 # 曜日ごとのグラフ描画
-fig1, ax1 = plt.subplots()
+fig, ax = plt.subplots()
 
-ax1.set_xlabel('週始まりの月曜日の日付')  # x軸ラベル
-ax1.set_ylabel('新規感染者数')  # y軸ラベル
-ax1.set_title('曜日別新規感染者数') # グラフタイトル
+ax.set_xlabel('週始まりの月曜日の日付')  # x軸ラベル
+ax.set_ylabel('新規感染者数')  # y軸ラベル
+ax.set_title('曜日別新規感染者数') # グラフタイトル
 # ax.set_aspect('equal') # スケールを揃える
-ax1.grid()            # 罫線
+ax.grid()            # 罫線
 #ax.set_xlim([-10, 10]) # x方向の描画範囲を指定
 #ax.set_ylim([0, 1])    # y方向の描画範囲を指定
-ax1.plot(t1, y1, color=c1, label=l1)
-ax1.plot(t1, y2, color=c2, label=l2)
-ax1.plot(t1, y3, color=c3, label=l3)
-ax1.plot(t1, y4, color=c4, label=l4)
-ax1.plot(t1, y5, color=c5, label=l5)
-ax1.plot(t1, y6, color=c6, label=l6)
-ax1.plot(t1, y7, color=c7, label=l7)
-ax1.legend(loc=0)    # 凡例
+ax.plot(t1, y1, color=c1, label=l1)
+ax.plot(t1, y2, color=c2, label=l2)
+ax.plot(t1, y3, color=c3, label=l3)
+ax.plot(t1, y4, color=c4, label=l4)
+ax.plot(t1, y5, color=c5, label=l5)
+ax.plot(t1, y6, color=c6, label=l6)
+ax.plot(t1, y7, color=c7, label=l7)
+ax.legend(loc=0)    # 凡例
 plt.xticks(rotation=90)     # x軸の文字を90度回転
-fig1.tight_layout()  # レイアウトの設定（保存の直前に入れて調整）
+fig.tight_layout()  # レイアウトの設定（保存の直前に入れて調整）
 plt.savefig('tokyo/week.png', dpi=300) # 画像の保存
 
 ## 日別のグラフ
 # 日別のデータ
 t_daily = data_count.index
 y_daily = data_count.values
+y_mean7 = np.zeros(len(y_daily)) # 7日間平均
+for i in range(6, len(y_daily)):
+    y_mean7[i] = np.mean(y_daily[i-6:i+1])
 
+# ========================
 # 日ごとのグラフ描画
-fig2, ax2 = plt.subplots()
+# ========================
+fig, ax = plt.subplots()
 
-ax2.set_xlabel('日付（月曜日）')  # x軸ラベル
-ax2.set_ylabel('新規感染者数')  # y軸ラベル
-ax2.set_title('日別新規感染者数') # グラフタイトル
+ax.set_xlabel('日付（月曜日）')  # x軸ラベル
+ax.set_ylabel('感染者数')  # y軸ラベル
+ax.set_title('日別新規感染者数及び7日間平均') # グラフタイトル
 # ax.set_aspect('equal') # スケールを揃える
-ax2.grid()            # 罫線
+ax.grid()            # 罫線
 #ax.set_xlim([-10, 10]) # x方向の描画範囲を指定
 #ax.set_ylim([0, 1])    # y方向の描画範囲を指定
-ax2.plot(t_daily, y_daily)
+ax.plot(t_daily[:], y_daily[:], color='blue', label='新規感染者数')
+ax.plot(t_daily[:], y_mean7[:], color='red', label='7日間平均')
 # ax.legend(loc=0)    # 凡例
-ax2.set_xticks(data_count[::7].index)       # 月曜日の日付のみ軸に表示する
+ax.legend()
+ax.set_xticks(data_count[::7].index)       # 月曜日の日付のみ軸に表示する
 plt.xticks(rotation=90)     # x軸の文字を90度回転
-fig2.tight_layout()  # レイアウトの設定（保存の直前に入れて調整）
+fig.tight_layout()  # レイアウトの設定（保存の直前に入れて調整）
 plt.savefig('tokyo/daily.png', dpi=300) # 画像の保存
+
+
+# ========================
+# 日ごとのグラフ描画（log）
+# ========================
+fig, ax = plt.subplots()
+
+ax.set_xlabel('日付（月曜日）')  # x軸ラベル
+ax.set_ylabel('感染者数')  # y軸ラベル
+ax.set_title('日別新規感染者数及び7日間平均') # グラフタイトル
+# ax.set_aspect('equal') # スケールを揃える
+ax.grid()            # 罫線
+#ax.set_xlim([-10, 10]) # x方向の描画範囲を指定
+#ax.set_ylim([0, 1])    # y方向の描画範囲を指定
+ax.plot(t_daily[:], y_daily[:], color='blue', label='新規感染者数')
+ax.plot(t_daily[:], y_mean7[:], color='red', label='7日間平均')
+plt.yscale("log")
+# ax.legend(loc=0)    # 凡例
+ax.legend()
+ax.set_xticks(data_count[::7].index)       # 月曜日の日付のみ軸に表示する
+plt.xticks(rotation=90)     # x軸の文字を90度回転
+fig.tight_layout()  # レイアウトの設定（保存の直前に入れて調整）
+plt.savefig('tokyo/daily_log.png', dpi=300) # 画像の保存
+
