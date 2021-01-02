@@ -3,13 +3,15 @@ import matplotlib.pyplot as plt
 import japanize_matplotlib          # 日本語表示に対応
 import numpy as np
 import pandas as pd
+import urllib3
 
 # URLからデータセットを読み込む
 url = "https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv"
 data = pd.read_csv(url)
+# data = pd.read_table(r"https://stopcovid19.metro.tokyo.lg.jp/data/130001_tokyo_covid19_patients.csv")
 
 # 必要なデータの整理
-data_week = data.loc[139:, ['No', '公表_年月日', '曜日']]
+data_week = data.loc[139:, ['No', '公表_年月日']]
 data_week.head()
 
 # 公表_年月日ごとの新規感染者数の小計を取る
@@ -117,7 +119,8 @@ ax.set_xlabel('日付（月曜日）')  # x軸ラベル
 ax.set_ylabel('感染者数')  # y軸ラベル
 ax.set_title('日別新規感染者数及び7日間平均') # グラフタイトル
 # ax.set_aspect('equal') # スケールを揃える
-ax.grid()            # 罫線
+ax.grid(which='major', linestyle='-')            # 罫線
+ax.grid(which='minor', linestyle='--')            # 罫線
 #ax.set_xlim([-10, 10]) # x方向の描画範囲を指定
 #ax.set_ylim([0, 1])    # y方向の描画範囲を指定
 # ax.plot(t_daily[:], y_daily[:], color='blue', label='新規感染者数')
