@@ -47,3 +47,6 @@ jobs:
       - name: Run send.py
         run: |
           python send.py
+        env:
+          SLACK_ID: ${{ secrets.SLACK_ID }}
+          LINE_TOKEN: ${{ secrets.LINE_TOKEN }}
