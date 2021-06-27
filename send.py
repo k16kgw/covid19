@@ -1,18 +1,17 @@
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+# from webdriver_manager.chrome import ChromeDriverManager
+# from selenium import webdriver
+# from selenium.webdriver.chrome.options import Options
 import os
-import time
-import yaml
-import datetime
+# import time
+# import yaml
+# import datetime
 import slackweb
 import argparse
-import textwrap
-from bs4 import BeautifulSoup
-import warnings
+# import textwrap
+# from bs4 import BeautifulSoup
+# import warnings
 import urllib.parse
-from dataclasses import dataclass
-import arxiv
+# from dataclasses import dataclass
 import requests
 
 import cv2
