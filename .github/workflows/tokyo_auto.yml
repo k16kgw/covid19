@@ -27,6 +27,7 @@ jobs:
           pip install matplotlib
           pip install japanize-matplotlib
           pip install urllib3
+          pip install opencv-python
           
       - name: Run daily-week.py
         run: |
