@@ -15,8 +15,9 @@ import urllib.parse
 import requests
 
 import cv2
+import numpy
 
-def send2app(img: ndarray, slack_id: str, line_token: str) -> None:
+def send2app(img: numpy.ndarray, slack_id: str, line_token: str) -> None:
     # slack
     if slack_id is not None:
         slack = slackweb.Slack(url=slack_id)
