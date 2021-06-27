@@ -30,7 +30,7 @@ jobs:
           
       - name: Run daily-week.py
         run: |
-          python /tokyo/daily-week.py
+          python tokyo/daily-week.py
 
       - name: Commit and Push # 実行した結果をプッシュして変更をレポジトリに反映
         run: |
