@@ -40,3 +40,7 @@ jobs:
           git commit -m "Update graph"
           git pull
           git push origin master
+
+      - name: Run send.py
+        run: |
+          python send.py
