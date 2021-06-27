@@ -31,3 +31,12 @@ jobs:
       - name: Run daily-week.py
         run: |
           python /tokyo/daily-week.py
+
+      - name: Commit and Push # 実行した結果をプッシュして変更をレポジトリに反映
+        run: |
+          git config user.name "kk"
+          git config user.email "gerogero7429@gmail.com"
+          git add .
+          git commit -m "Update graph"
+          git pull
+          git push origin master
