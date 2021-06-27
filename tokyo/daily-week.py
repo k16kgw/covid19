@@ -55,7 +55,9 @@ if len(y7) < week:
                     if len(y2) < week:
                         y2 = np.append(y2, None)
 
+# ========================
 # 曜日ごとのグラフ描画
+# ========================
 fig, ax = plt.subplots()
 
 ax.set_xlabel('週始まりの月曜日の日付')  # x軸ラベル
@@ -75,9 +77,10 @@ ax.plot(t1, y7, color=c7, label=l7)
 ax.legend(loc=0)    # 凡例
 plt.xticks(rotation=90)     # x軸の文字を90度回転
 fig.tight_layout()  # レイアウトの設定（保存の直前に入れて調整）
-plt.savefig('tokyo/week.png', dpi=300) # 画像の保存
+plt.savefig('tokyo/outputs/week.png', dpi=300) # 画像の保存
 
-## 日別のグラフ
+##########################
+# 日別のグラフ
 # 日別のデータ
 t_daily = data_count.index
 y_daily = data_count.values
@@ -107,7 +110,7 @@ ax.set_xticks(data_count[7::7].index)       # 月曜日の日付のみ軸に表�
 ax.legend()
 plt.xticks(rotation=90)     # x軸の文字を90度回転
 fig.tight_layout()  # レイアウトの設定（保存の直前に入れて調整）
-plt.savefig('tokyo/daily.png', dpi=300) # 画像の保存
+plt.savefig('tokyo/outputs/daily.png', dpi=300) # 画像の保存
 
 
 # ========================
@@ -134,5 +137,31 @@ plt.yscale("log")
 ax.legend()
 plt.xticks(rotation=90)     # x軸の文字を90度回転
 fig.tight_layout()  # レイアウトの設定（保存の直前に入れて調整）
-plt.savefig('tokyo/daily_log.png', dpi=300) # 画像の保存
+plt.savefig('tokyo/outputs/daily_log.png', dpi=300) # 画像の保存
 
+
+# ========================
+# 直近1年の日ごとのグラフ描画
+# ========================
+fig, ax = plt.subplots()
+
+ax.set_xlabel('日付（月曜日）')  # x軸ラベル
+ax.set_ylabel('感染者数')  # y軸ラベル
+ax.set_title('日別新規感染者数及び7日間平均') # グラフタイトル
+# ax.set_aspect('equal') # スケールを揃える
+ax.grid()            # 罫線
+#ax.set_xlim([-10, 10]) # x方向の描画範囲を指定
+#ax.set_ylim([0, 1])    # y方向の描画範囲を指定
+# ax.plot(t_daily[:], y_daily[:], color='blue', label='新規感染者数')
+# ax.plot(t_daily[:], y_mean7[:], color='red', label='7日間平均')
+# ax.set_xticks(data_count[::7].index)       # 月曜日の日付のみ軸に表示する
+ax.plot(t_daily[7:], y_daily[7:], color='blue', label='新規感染者数')
+ax.plot(t_daily[7:], y_mean7[7:], color='red', label='7日間平均')
+ax.set_xticks(data_count[7::7].index)       # 月曜日の日付のみ軸に表示する
+plt.xlim(t_daily[-365], t_daily[-1])
+# ax.legend(loc=0)    # 凡例
+ax.legend()
+plt.xticks(rotation=90)     # x軸の文字を90度回転
+plt.tick_params(axis='x', which='major', labelsize=7)
+fig.tight_layout()  # レイアウトの設定（保存の直前に入れて調整）
+plt.savefig('tokyo/outputs/daily_inyear.png', dpi=300) # 画像の保存
