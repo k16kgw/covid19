@@ -3,7 +3,8 @@ name: TokyoAuto
 on: 
   schedule:
     - cron: '0 0 * * *'
-    
+  workflow_dispatch:
+  
   push:
     branches:
       - master
@@ -19,8 +20,14 @@ jobs:
         with:
           python-version: "3.9"
           
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: 1.1.2
+          
       - name: Install dependencies
         run: |
+          poetry install
           python -m pip install --upgrade pip
           pip install numpy
           pip install pandas
@@ -31,22 +38,22 @@ jobs:
           pip install slackweb
           pip install requests
           
-      - name: Run daily-week.py
+      - name: Run daily-week
         run: |
-          python tokyo/daily-week.py
+          poetry run python tokyo/daily-week.py
 
-#       - name: Commit and Push # 実行した結果をプッシュして変更をレポジトリに反映
-#         run: |
-#           git config user.name "keikagawa"
-#           git config user.email "gerogero7429@gmail.com"
-#           git add .
-#           git commit -m "Update graph"
-#           git pull
-      #     git push origin master
+      #- name: Commit and Push # 実行した結果をプッシュして変更をレポジトリに反映
+      #  run: |
+      #    git config user.name "keikagawa"
+      #    git config user.email "gerogero7429@gmail.com"
+      #    git add .
+      #    git commit -m "Update graph"
+      #    git pull
+      #    git push origin master
 
-      - name: Run send.py
+      - name: Run send
         run: |
-          python send.py
+          poetry run python send.py
         env:
           SLACK_ID: ${{ secrets.SLACK_ID }}
           LINE_TOKEN: ${{ secrets.LINE_TOKEN }}
