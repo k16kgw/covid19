@@ -2,7 +2,7 @@ name: TokyoAuto
 
 on: 
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 3 * * *'
     
   push:
     branches:
@@ -27,16 +27,26 @@ jobs:
           pip install matplotlib
           pip install japanize-matplotlib
           pip install urllib3
+          pip install opencv-python
+          pip install slackweb
+          pip install requests
           
       - name: Run daily-week.py
         run: |
           python tokyo/daily-week.py
 
-      - name: Commit and Push # 実行した結果をプッシュして変更をレポジトリに反映
+#       - name: Commit and Push # 実行した結果をプッシュして変更をレポジトリに反映
+#         run: |
+#           git config user.name "keikagawa"
+#           git config user.email "gerogero7429@gmail.com"
+#           git add .
+#           git commit -m "Update graph"
+#           git pull
+      #     git push origin master
+
+      - name: Run send.py
         run: |
-          git config user.name "keikagawa"
-          git config user.email "gerogero7429@gmail.com"
-          git add .
-          git commit -m "Update graph"
-          git pull
-          git push origin master
+          python send.py
+        env:
+          SLACK_ID: ${{ secrets.SLACK_ID }}
+          LINE_TOKEN: ${{ secrets.LINE_TOKEN }}
