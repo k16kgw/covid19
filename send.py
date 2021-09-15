@@ -41,8 +41,8 @@ def main():
   slack_id = os.getenv("SLACK_ID") or args.slack_id
   line_token = os.getenv("LINE_TOKEN") or args.line_token
 
-  img = cv2.imread('tokyo/outputs/daily_inyear.png', 0)
-  # img = 'test'
+#   img = cv2.imread('tokyo/outputs/daily_inyear.png', 0)
+  img = 'test'
   send2app(img, slack_id, line_token)
 
 if __name__ == "__main__":
